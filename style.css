@@ -475,3 +475,110 @@ table th, table td {
     border-bottom: 1px solid var(--border-color) !important;
 }
 /* --- END PREMIUM THEME --- */
+
+
+/* --- MOBILE RESPONSIVENESS OVERHAUL --- */
+@media (max-width: 768px) {
+    /* 1. Global Layout Adjustments */
+    .container, .dash-card {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+    
+    /* 2. Responsive Navigation */
+    .nav-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.5rem;
+    }
+    .nav-link {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+        border-radius: 12px;
+    }
+
+    /* 3. Convert Tables into "Cards" for Mobile */
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+    
+    /* Hide the horizontal headers */
+    thead {
+        display: none;
+    }
+    
+    /* Style each row as a separate card */
+    tr {
+        margin-bottom: 1.5rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Reset TD styling for block layout */
+    td {
+        border: none !important;
+        padding: 0.5rem 0 !important;
+        text-align: right !important; /* Align values to the right */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* -- Semester Calculator Form Specific -- */
+    #cgpa-form td:nth-child(1) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--border-color) !important;
+        padding-bottom: 0.8rem !important;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Inject labels using pseudo-elements */
+    #cgpa-form td:nth-child(2)::before { content: "Credits:"; font-weight: 500; color: var(--text-muted); }
+    #cgpa-form td:nth-child(4)::before { content: "Total:"; font-weight: 500; color: var(--text-muted); }
+    #cgpa-form td:nth-child(5)::before { content: "Grade:"; font-weight: 500; color: var(--text-muted); }
+    
+    /* Optimize the Marks Input Grid */
+    #cgpa-form td:nth-child(3) {
+        display: block;
+    }
+    .marks-entry {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two side-by-side inputs on mobile */
+        gap: 1rem;
+        width: 100%;
+    }
+    .mark-group {
+        width: 100%;
+    }
+    .mark-group input {
+        width: 100%; /* Fill the grid cell */
+        padding: 0.6rem;
+    }
+
+    /* -- Master Dashboard Table Specific -- */
+    #semester-table td:nth-child(1)::before { content: "Semester:"; font-weight: 500; color: var(--text-muted); }
+    #semester-table td:nth-child(2)::before { content: "SGPA:"; font-weight: 500; color: var(--text-muted); }
+    #semester-table td:nth-child(3)::before { content: "Percentage:"; font-weight: 500; color: var(--text-muted); }
+    #semester-table td:nth-child(4)::before { content: "Credits:"; font-weight: 500; color: var(--text-muted); }
+
+    /* Fix the Results Summary Card layout */
+    .result-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    /* Chart container */
+    canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+}
