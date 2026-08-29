@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Cumulative Dashboard</title>
+    <link rel="stylesheet" href="style.css?v=5.0">
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .dash-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .dash-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary-color);
+        }
+        body.dark-mode .dash-card:hover {
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.02);
+        }
+        .dash-title {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .dash-value {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        .dash-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .semester-breakdown {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .semester-breakdown th, .semester-breakdown td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .semester-breakdown th {
+            background-color: var(--table-header);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .semester-breakdown tr:hover {
+            background-color: var(--table-hover);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+        }
+        .status-complete { background: var(--g-O-bg); color: var(--g-O-fg); }
+        .status-missing { background: var(--g-F-bg); color: var(--g-F-fg); }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a73e8">
+</head>
+<body>
+
+<script>
+    // Anti-Flash: Instantly apply dark mode before browser paints the page
+    if (localStorage.getItem('theme') === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+    }
+</script>
+
+    <div class="container">
+        <header>
+            <h1>Master Cumulative Dashboard</h1>
+            <p>Your overall B.E. (Computer Engineering) progress</p>
+            <div class="theme-switch-wrapper">
+                <span class="theme-icon">☀️</span>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider"></div>
+                </label>
+                <span class="theme-icon">🌙</span>
+            </div>
+            
+            <nav class="nav-bar">
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="sem1.html" class="nav-link">Semester 1</a>
+                <a href="sem2.html" class="nav-link">Semester 2</a>
+                <a href="sem3.html" class="nav-link">Semester 3</a>
+                <a href="sem4.html" class="nav-link">Semester 4</a>
+                <a href="index.html" class="nav-link">Semester 5</a>
+            </nav>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="dash-card">
+                <div class="dash-title">Overall CGPA</div>
+                <div class="dash-value" id="dash-cgpa">0.00</div>
+                <div class="dash-subtitle">Cumulative Grade Point Average</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-title">Overall Percentage</div>
+                <div class="dash-value" id="dash-perc">0.00%</div>
+                <div class="dash-subtitle">Grand Total Marks Percentage</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-title">Total Credits</div>
+                <div class="dash-value" id="dash-credits">0</div>
+                <div class="dash-subtitle">Total credits earned so far</div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons-container no-print">
+            <button id="print-btn" class="action-btn primary-action">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download Report
+            </button>
+            <button id="reset-btn" class="action-btn danger-action">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                Clear All Data
+            </button>
+        </div>
+
+        <!-- Target Predictor -->
+        <div class="dash-card no-print" style="margin-top: 2rem; margin-bottom: 2rem;">
+            <h3 style="color: var(--text-main); margin-bottom: 0.5rem;">🎯 Target CGPA Predictor</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Find out exactly what you need to score in your remaining credits to hit your dream CGPA.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                <div>
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 0.3rem; font-weight: 600;">Target CGPA</label>
+                    <input type="number" id="target-cgpa" step="0.01" min="0" max="10" placeholder="e.g. 8.50" style="text-align: center;">
+                </div>
+                <div>
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 0.3rem; font-weight: 600;">Total Degree Credits</label>
+                    <input type="number" id="total-credits-input" value="160" style="text-align: center;">
+                </div>
+            </div>
+            
+            <div id="predictor-result" style="margin-top: 1.5rem; font-weight: 600; font-size: 1.1rem; color: var(--primary-color);"></div>
+        </div>
+
+        <h3 style="margin-top: 2.5rem; margin-bottom: 1rem; color: var(--text-main); font-weight: 600;">Semester Breakdown</h3>
+        <div class="table-responsive">
+            <table class="semester-breakdown">
+                <thead>
+                    <tr>
+                        <th>Semester</th>
+                        <th>Credits</th>
+                        <th>SGPA</th>
+                        <th>Percentage</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="dashboard-tbody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        
+        <div class="dash-card no-print" style="margin-top: 2rem;">
+            <h3 style="color: var(--text-main); margin-bottom: 1.5rem;">📈 SGPA Trajectory</h3>
+            <canvas id="sgpaChart" height="100"></canvas>
+        </div>
+
+        <div id="result-container" class="no-print" style="margin-top: 2rem;">
+            <h3 style="color: var(--text-main); font-size: 1.2rem; margin-bottom: 0.5rem;">How it works</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                This dashboard dynamically aggregates data from any semester you complete. You can view, test, and calculate your SGPA on a single semester's page completely independently! Once a semester is fully filled, the data automatically saves locally and appears here in your master overview.
+            </p>
+        </div>
+    </div>
+    
+    <script src="theme.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

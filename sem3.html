@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSEC Sem III Marks & SGPA Calculator</title>
+    <link rel="stylesheet" href="style.css?v=5.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a73e8">
+</head>
+<body>
+
+<script>
+    // Anti-Flash: Instantly apply dark mode before browser paints the page
+    if (localStorage.getItem('theme') === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+    }
+</script>
+
+    <div class="container">
+        <header>
+            <h1>Semester III Marks & SGPA Calculator</h1>
+            <p>Thadomal Shahani Engineering College (COMP) - Mumbai University</p>
+            <div class="theme-switch-wrapper">
+                <span class="theme-icon">☀️</span>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider"></div>
+                </label>
+                <span class="theme-icon">🌙</span>
+            </div>
+
+            <nav class="nav-bar">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="sem1.html" class="nav-link">Semester 1</a>
+                <a href="sem2.html" class="nav-link">Semester 2</a>
+                <a href="sem3.html" class="nav-link active">Semester 3</a>
+                <a href="sem4.html" class="nav-link">Semester 4</a>
+                <a href="index.html" class="nav-link">Semester 5</a>
+            </nav>
+        </header>
+        <main>
+            <form id="cgpa-form">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th class="text-center">Credits</th>
+                                <th>Enter Marks</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subjects-body">
+                            <!-- Populated dynamically by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+            <div id="result-container">
+                <h2>Live SGPA: <span id="sgpa-result">0.00</span></h2>
+                <h3 style="margin-top: 0.8rem; color: var(--text-main); font-weight: 600; font-size: 1.3rem;">Percentage: <span id="percentage-result" style="color: var(--primary-color);">0.00%</span></h3>
+                <p id="grade-remark">Enter your marks above to see your SGPA.</p>
+                <button id="save-to-dashboard-btn" class="action-btn success-action" style="margin-top: 1.5rem; width: 100%;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Save to Master Dashboard
+                </button>
+            </div>
+        </main>
+    </div>
+    <script src="sem3.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>
