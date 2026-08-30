@@ -72,15 +72,87 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Professional Toast Notification Function
+    function showToast(message, type="error") {
+        let toast = document.getElementById("pro-toast");
+        if (!toast) {
+            toast = document.createElement("div");
+            toast.id = "pro-toast";
+            toast.className = "no-print";
+            document.body.appendChild(toast);
+        }
+        
+        toast.style.position = "fixed";
+        toast.style.bottom = "24px";
+        toast.style.right = "24px";
+        toast.style.padding = "14px 24px";
+        toast.style.borderRadius = "12px";
+        toast.style.color = "#fff";
+        toast.style.fontWeight = "600";
+        toast.style.fontSize = "0.95rem";
+        toast.style.boxShadow = "0 10px 25px -5px rgba(0, 0, 0, 0.2)";
+        toast.style.transform = "translateY(150px) scale(0.9)";
+        toast.style.opacity = "0";
+        toast.style.transition = "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease";
+        toast.style.zIndex = "9999";
+        
+        if (type === "error") {
+            toast.style.background = "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)";
+            toast.innerHTML = `⚠️ &nbsp; ${message}`;
+        } else {
+            toast.style.background = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
+            toast.innerHTML = `✅ &nbsp; ${message}`;
+        }
+        
+        // Animate in
+        setTimeout(() => {
+            toast.style.transform = "translateY(0) scale(1)";
+            toast.style.opacity = "1";
+        }, 10);
+        
+        // Animate out
+        setTimeout(() => {
+            toast.style.transform = "translateY(150px) scale(0.9)";
+            toast.style.opacity = "0";
+        }, 3500);
+    }
+
     // Feature: Print PDF
-    document.getElementById("print-btn").addEventListener("click", () => {
-        window.print();
+    const printBtn = document.getElementById("print-btn");
+    
+    // Visually disable button if no data
+    if (overallCredits === 0) {
+        printBtn.style.opacity = "0.5";
+        printBtn.style.cursor = "not-allowed";
+    }
+
+    printBtn.addEventListener("click", () => {
+        if (overallCredits === 0) {
+            showToast("No data available! Save at least one semester to generate a report.", "error");
+            return;
+        }
+        showToast("Generating professional report...", "success");
+        setTimeout(() => {
+            window.print();
+        }, 800);
     });
 
     // Feature: Predictor Logic
     const targetInput = document.getElementById("target-cgpa");
     const totalCreditsInput = document.getElementById("total-credits-input");
     const predResult = document.getElementById("predictor-result");
+    
+    // Visually disable Predictor if no data
+    if (overallCredits === 0) {
+        targetInput.disabled = true;
+        totalCreditsInput.disabled = true;
+        targetInput.style.opacity = "0.5";
+        totalCreditsInput.style.opacity = "0.5";
+        targetInput.style.cursor = "not-allowed";
+        totalCreditsInput.style.cursor = "not-allowed";
+        predResult.textContent = "Please save at least 1 semester to unlock the CGPA Predictor.";
+        predResult.style.color = "var(--text-muted)";
+    }
 
     function calculatePrediction() {
         const targetCGPA = parseFloat(targetInput.value);
