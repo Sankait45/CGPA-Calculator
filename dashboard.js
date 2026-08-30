@@ -142,16 +142,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalCreditsInput = document.getElementById("total-credits-input");
     const predResult = document.getElementById("predictor-result");
     
-    // Visually disable Predictor if no data
+    // Visually disable Predictor if no data (Professional Toast Version)
     if (overallCredits === 0) {
-        targetInput.disabled = true;
-        totalCreditsInput.disabled = true;
-        targetInput.style.opacity = "0.5";
-        totalCreditsInput.style.opacity = "0.5";
+        // Use readOnly instead of disabled so we can still catch click events!
+        targetInput.readOnly = true;
+        totalCreditsInput.readOnly = true;
+        
+        targetInput.style.opacity = "0.6";
+        totalCreditsInput.style.opacity = "0.6";
         targetInput.style.cursor = "not-allowed";
         totalCreditsInput.style.cursor = "not-allowed";
-        predResult.textContent = "Please save at least 1 semester to unlock the CGPA Predictor.";
-        predResult.style.color = "var(--text-muted)";
+        
+        predResult.textContent = ""; // Clear helper text
+        
+        // Show the professional toast when they click the locked inputs
+        const showPredictorToast = (e) => {
+            e.preventDefault();
+            e.target.blur(); // instantly drop focus so mobile keyboard doesn't pop up
+            showToast("Predictor locked! Save at least one semester to calculate targets.", "error");
+        };
+        
+        targetInput.addEventListener("click", showPredictorToast);
+        targetInput.addEventListener("focus", showPredictorToast);
+        
+        totalCreditsInput.addEventListener("click", showPredictorToast);
+        totalCreditsInput.addEventListener("focus", showPredictorToast);
     }
 
     function calculatePrediction() {
