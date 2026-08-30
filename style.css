@@ -1155,14 +1155,15 @@ body.mouse-active #pro-reactive-bg::after {
 
 
 /* --- ULTIMATE PREMIUM NATIVE-APP MOBILE EXPERIENCE --- */
-/* This ONLY triggers on screens smaller than 768px (Phones/Small Tablets) */
 @media (max-width: 768px) {
-    /* 1. True Edge-to-Edge App Layout */
+    /* 1. App Background & Safe Area */
     body { 
-        padding: 0 !important; 
+        padding: 0 0 90px 0 !important; /* Huge padding at bottom for the fixed nav bar */
+        background: var(--bg-color) !important; 
     }
+    
     .container {
-        padding: 1.5rem 1.25rem 3rem 1.25rem !important;
+        padding: 0 1rem 2rem 1rem !important;
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -1170,123 +1171,184 @@ body.mouse-active #pro-reactive-bg::after {
         border: none !important;
         box-shadow: none !important;
         background: transparent !important;
-        min-height: 100vh;
     }
 
-    /* 2. Stunning iOS-Style Glassmorphism Sticky Tabs */
+    /* 2. TRUE MOBILE BOTTOM NAVIGATION (App Style) */
     .nav-bar {
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 100 !important;
-        margin: 1rem -1.25rem 1.5rem -1.25rem !important;
-        padding: 1rem 1.25rem !important;
-        background: rgba(255, 255, 255, 0.75) !important;
-        backdrop-filter: blur(16px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-        /* Scrollable config */
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: auto !important;
+        z-index: 9999 !important;
+        margin: 0 !important;
+        padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px)) 1rem !important;
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(20px) saturate(200%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-bottom: none !important;
+        border-radius: 24px 24px 0 0 !important;
+        
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
-        gap: 0.75rem !important;
+        gap: 0.5rem !important;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05) !important;
     }
     .nav-bar::-webkit-scrollbar { display: none !important; }
     
     body.dark-mode .nav-bar {
-        background: rgba(19, 19, 20, 0.75) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        background: rgba(20, 20, 20, 0.85) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3) !important;
     }
 
     .nav-link {
-        padding: 0.6rem 1.25rem !important;
+        padding: 0.8rem 1.25rem !important;
         font-size: 0.95rem !important;
-        border-radius: 100px !important; /* Sleek Pill Shape */
-        font-weight: 600 !important;
+        border-radius: 100px !important;
+        font-weight: 700 !important;
         white-space: nowrap !important;
         flex-shrink: 0 !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
+        background: transparent !important;
+        color: var(--text-muted) !important;
+    }
+    .nav-link.active {
+        background: var(--primary-color) !important;
+        color: white !important;
+        box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3) !important;
     }
 
-    /* 3. Typography & Header Polish */
+    /* 3. Modern App Header */
     header {
-        text-align: left !important;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        text-align: center !important;
+        padding: 2rem 0 1.5rem 0 !important;
         position: relative;
     }
     header h1 { 
-        font-size: 1.75rem !important; 
-        font-weight: 800 !important; 
+        font-size: 1.8rem !important; 
+        font-weight: 900 !important; 
         letter-spacing: -0.5px !important;
-        line-height: 1.2 !important;
+        margin-bottom: 0.25rem !important;
     }
-    header p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+    header p { font-size: 1rem !important; }
     
     .theme-switch-wrapper {
         position: absolute;
-        top: 0;
+        top: 1rem;
         right: 0;
         margin: 0 !important;
     }
 
-    /* 4. Premium Floating Cards */
+    /* 4. Dashboard Grid & Cards */
+    .dashboard-grid { gap: 1.25rem !important; }
     .dash-card, tr {
         background: var(--card-bg) !important;
-        border: 1px solid var(--border-color) !important;
-        border-radius: 20px !important; /* Softer, modern corners */
+        border: none !important; /* Remove borders for cleaner look */
+        border-radius: 24px !important; /* Extremely rounded like iOS */
         padding: 1.5rem !important;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04) !important;
-        margin-bottom: 1.25rem !important;
-        transition: transform 0.2s ease !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
+        margin-bottom: 1.5rem !important;
     }
     body.dark-mode .dash-card, body.dark-mode tr {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
-        background: rgba(255,255,255,0.02) !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+        background: rgba(255,255,255,0.03) !important;
     }
 
-    /* 5. Native-App Form Inputs (Fixes iOS Zoom Issue) */
+    /* 5. Restructure Tables completely */
+    table, thead, tbody, th, td, tr { display: block; width: 100%; }
+    thead { display: none; }
+    
+    td { 
+        border: none !important;
+        padding: 0.75rem 0 !important; 
+        font-size: 1.05rem !important;
+        display: flex;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    
+    td[data-label]::before {
+        content: attr(data-label);
+        font-size: 0.85rem !important;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* 6. Form Specific App Styling */
+    #cgpa-form td:nth-child(1)[data-label]::before { display: none !important; }
+    
+    /* Subject Title Section */
+    #cgpa-form td:nth-child(1) {
+        flex-direction: column;
+        align-items: flex-start !important;
+        border-bottom: 2px dashed rgba(0,0,0,0.05) !important;
+        margin: -1.5rem -1.5rem 1rem -1.5rem;
+        padding: 1.5rem 1.5rem 1rem 1.5rem !important;
+        background: rgba(0,0,0,0.02);
+        border-radius: 24px 24px 0 0;
+    }
+    body.dark-mode #cgpa-form td:nth-child(1) {
+        border-bottom: 2px dashed rgba(255,255,255,0.05) !important;
+        background: rgba(255,255,255,0.02);
+    }
+    .subject-name {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: 0.25rem;
+    }
+
+    /* Marks Entry Inputs */
+    .marks-entry {
+        display: flex;
+        flex-direction: row !important;
+        justify-content: flex-end;
+        gap: 0.5rem !important;
+    }
+    
     input[type="number"] {
-        font-size: 16px !important; /* Strictly 16px prevents iOS Safari from auto-zooming */
-        height: 52px !important; /* Larger touch target */
+        font-size: 18px !important; /* Big text */
+        height: 50px !important; 
         border-radius: 14px !important;
-        width: 100% !important;
-        padding: 0 1.25rem !important;
-        background: rgba(0, 0, 0, 0.03) !important;
-        border: 1px solid rgba(0, 0, 0, 0.05) !important;
-        font-weight: 500 !important;
+        width: 80px !important; 
+        padding: 0 !important;
+        background: rgba(0, 0, 0, 0.04) !important;
+        border: 2px solid transparent !important;
+        font-weight: 800 !important;
+        text-align: center;
+        transition: all 0.2s ease;
     }
     body.dark-mode input[type="number"] {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
     }
     input[type="number"]:focus {
-        background: var(--input-bg) !important;
+        background: transparent !important;
         border-color: var(--primary-color) !important;
+        transform: scale(1.05);
     }
 
-    /* 6. Big, Bold, Tappable Action Buttons */
+    /* Badges */
+    .grade-badge { font-size: 1.1rem; padding: 0.4rem 1rem; border-radius: 12px; font-weight: 800; }
+    
+    /* 7. Action Buttons */
     .action-buttons-container {
         flex-direction: column !important;
         gap: 1rem !important;
-        margin-top: 1rem !important;
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important; /* ensure space before bottom nav */
     }
     .action-btn {
         width: 100% !important;
         justify-content: center !important;
-        height: 56px !important; /* Standard native app button height */
-        border-radius: 16px !important;
-        font-size: 1.1rem !important;
-        box-shadow: 0 8px 20px rgba(26, 115, 232, 0.25) !important;
-    }
-    
-    /* Tweaks for dynamic labels */
-    td { padding: 0.6rem 0 !important; font-size: 1rem !important; }
-    td[data-label]::before {
-        font-size: 0.85rem !important;
-        opacity: 0.8;
+        height: 60px !important;
+        border-radius: 20px !important;
+        font-size: 1.15rem !important;
+        font-weight: 800 !important;
     }
 }
-/* ---------------------------------------------------------- */
