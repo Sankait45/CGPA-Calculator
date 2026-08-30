@@ -1399,3 +1399,197 @@ header {
     }
 }
 /* ----------------------------------------- */
+
+
+/* ==========================================================================
+   ULTRA-RESPONSIVE EDGE CASES & 320PX OPTIMIZATION 
+   (Home, Semesters, Dashboard, Predictor, Modals, Report, Nav, Charts, Forms)
+   ========================================================================== */
+
+/* 1. GLOBAL OVERFLOW PROTECTION (Text clipping & Horizontal scrolling) */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+* {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* 2. BUTTONS & INPUTS (Touch Targets - Apple/Google 48px Min Standard) */
+input[type="number"], .target-input, select, input[type="text"] {
+    min-height: 48px !important;
+    font-size: 16px !important; /* Strictly 16px prevents iOS Safari auto-zoom on tap */
+}
+button, .action-btn, .modal-btn, .theme-toggle-btn {
+    min-height: 48px !important;
+    min-width: 48px !important; /* ensures small icon buttons are still tappable */
+}
+.theme-toggle-btn {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+/* 3. CHART RESPONSIVENESS */
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-height: 250px;
+    height: 40vh; /* Scales with screen height on mobiles */
+    max-height: 400px;
+}
+canvas {
+    max-width: 100% !important;
+}
+
+/* 4. NAVIGATION SAFETY (No overlap, scrollable) */
+.nav-bar {
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    /* Add scroll padding so active element doesn't hug edge exactly */
+    scroll-padding-left: 1rem;
+}
+.nav-link {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+/* 5. MODAL SAFETY ON TINY SCREENS */
+.modal-content {
+    width: 95% !important;
+    max-width: 400px !important;
+    box-sizing: border-box !important;
+    margin: 1rem auto !important;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+/* ==========================================================================
+   BREAKPOINTS: 430px, 390px, 375px, 360px, 320px
+   ========================================================================== */
+
+@media (max-width: 430px) {
+    /* Tighten global layout */
+    .container {
+        padding: 0 0.75rem 2rem 0.75rem !important;
+    }
+    .dash-card, tr {
+        padding: 1.25rem !important;
+    }
+    header h1 {
+        font-size: 1.4rem !important;
+    }
+    .subject-name {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 380px) {
+    /* Extreme layout shift for < 380px (e.g. 375px, 360px, 320px) */
+    
+    /* Tables: Break apart flex rows to stack vertically so they don't squish */
+    td {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+    td[data-label]::before {
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Inputs: Allow marks inputs to stretch to full card width for easy tapping */
+    .marks-entry {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        gap: 1rem !important;
+    }
+    input[type="number"] {
+        flex: 1 !important; /* Grow to fill available space */
+        width: 100% !important;
+        min-width: 60px !important;
+    }
+    
+    /* Predictor: Stack predictor inputs */
+    .predictor-card {
+        padding: 1rem !important;
+    }
+    .target-input {
+        width: 100% !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Modals: Stack buttons vertically */
+    .modal-actions {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+    .modal-btn {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+}
+
+@media (max-width: 320px) {
+    /* The absolute minimum width test - 320px */
+    
+    .container {
+        padding: 0 0.5rem 1.5rem 0.5rem !important;
+    }
+    .dash-card, tr {
+        padding: 1rem !important;
+        border-radius: 16px !important;
+    }
+    header h1 {
+        font-size: 1.2rem !important;
+    }
+    header p {
+        font-size: 0.85rem !important;
+    }
+    
+    /* Theme Toggle */
+    .theme-toggle-btn {
+        top: 0.5rem !important;
+        right: 0.5rem !important;
+        width: 44px !important;
+        height: 44px !important;
+    }
+    
+    /* Nav bar sizing */
+    .nav-link {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Fix dashboard specific table */
+    .dashboard-grid {
+        gap: 1rem !important;
+    }
+    
+    /* Fix action buttons */
+    .action-btn {
+        font-size: 1rem !important;
+        padding: 0.8rem 1rem !important;
+        height: auto !important;
+        min-height: 48px !important;
+    }
+}
+
+
+/* Predictor Form specific fixes */
+.dash-card > div[style*="display: flex"] {
+    width: 100% !important;
+}
+.dash-card > div[style*="display: flex"] > div {
+    flex: 1 1 100% !important;
+    min-width: 120px !important;
+    width: 100% !important;
+}
+
+@media (max-width: 380px) {
+    .dash-card > div[style*="display: flex"] > div {
+        flex-basis: 100% !important;
+    }
+}
