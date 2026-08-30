@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     const toggleBtn = document.getElementById('theme-toggle-btn');
-    const currentTheme = localStorage.getItem('theme');
+    // Default to dark mode if no theme is set
+    let currentTheme = localStorage.getItem('theme');
+    
+    if (!currentTheme) {
+        currentTheme = 'dark-mode';
+        localStorage.setItem('theme', 'dark-mode');
+    }
 
-    if (currentTheme) {
-        document.body.classList.add(currentTheme);
+    if (currentTheme === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
     }
 
     if (toggleBtn) {
@@ -24,3 +32,32 @@ const metaTransition = document.querySelector('meta[name="view-transition"]');
 if (metaTransition) {
     metaTransition.remove();
 }
+
+
+
+
+
+
+// --- VERCEL STYLE REACTIVE LOGIC ---
+function initProReactive() {
+    let bg = document.getElementById("pro-reactive-bg");
+    if (!bg) {
+        bg = document.createElement("div");
+        bg.id = "pro-reactive-bg";
+        document.body.prepend(bg);
+    }
+    
+    document.addEventListener("mousemove", (e) => {
+        requestAnimationFrame(() => {
+            document.body.classList.add("mouse-active");
+            bg.style.setProperty("--mouse-x", `${e.clientX}px`);
+            bg.style.setProperty("--mouse-y", `${e.clientY}px`);
+        });
+    });
+    
+    document.addEventListener("mouseleave", () => {
+        document.body.classList.remove("mouse-active");
+    });
+}
+initProReactive();
+// -----------------------------------

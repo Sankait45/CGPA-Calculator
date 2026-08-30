@@ -888,3 +888,165 @@ body:not(.dark-mode) table.semester-breakdown tr:hover {
     background: rgba(255, 255, 255, 0.4) !important;
 }
 /* ------------------------------------- */
+
+/* --- MODERN DOT BACKGROUND --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    
+    /* Professional sleek dot pattern */
+    background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    
+    /* Softly fade the dots out near the edges of the screen */
+    mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+    -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+}
+
+body.dark-mode::before {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+}
+
+/* Subtle, static corner glow for depth (no moving JS required) */
+body::after {
+    content: "";
+    position: fixed;
+    top: -20vh; right: -10vw;
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
+    z-index: -2;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+body.dark-mode::after {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 60%);
+}
+/* ----------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- VERCEL STYLE REACTIVE BACKGROUND --- */
+#pro-reactive-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+/* Layer 1: The Base Dots */
+#pro-reactive-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* LIGHT MODE: Ultra-sleek, faint gray dots so it doesn't look dirty */
+    background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px);
+    background-size: 50px 50px;
+}
+body.dark-mode #pro-reactive-bg::before {
+    /* DARK MODE: Crisp faint white dots */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+}
+
+/* Layer 2: The Reactive Hover Area */
+#pro-reactive-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    
+    /* LIGHT MODE: A clean purple grid */
+    background-image: 
+        linear-gradient(rgba(139, 92, 246, 0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.4) 1px, transparent 1px);
+    background-size: 50px 50px;
+    
+    /* LIGHT MODE MAGIC: Adds a soft ambient purple flashlight fill so it pops brilliantly on white backgrounds */
+    background-color: rgba(139, 92, 246, 0.03); 
+    
+    mask-image: radial-gradient(circle 200px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle 200px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+    
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+body.dark-mode #pro-reactive-bg::after {
+    /* DARK MODE MAGIC: Stronger neon glow and richer aura to pop on black */
+    background-image: 
+        linear-gradient(rgba(139, 92, 246, 0.7) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.7) 1px, transparent 1px);
+    background-color: rgba(139, 92, 246, 0.06); 
+}
+
+body.mouse-active #pro-reactive-bg::after {
+    opacity: 1;
+}
+/* ---------------------------------------- */
+
+/* --- VERCEL STYLE REACTIVE BACKGROUND --- */
+#pro-reactive-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+/* Layer 1: The Base Dots */
+#pro-reactive-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* LIGHT MODE: Ultra-sleek, faint gray dots */
+    background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px);
+    background-size: 50px 50px;
+}
+body.dark-mode #pro-reactive-bg::before {
+    /* DARK MODE: Crisp faint white dots */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+}
+
+/* Layer 2: The Reactive Hover Area */
+#pro-reactive-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    
+    /* LIGHT MODE FIX: Instead of a clashing grid and a purple stain, 
+       we just cleanly "light up" the dots themselves to a soft purple. */
+    background-image: radial-gradient(rgba(139, 92, 246, 0.6) 2px, transparent 2px);
+    background-size: 50px 50px;
+    background-color: transparent; /* No more ugly purple stain */
+    
+    mask-image: radial-gradient(circle 200px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle 200px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+    
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+body.dark-mode #pro-reactive-bg::after {
+    /* DARK MODE: Keeps the cool glowing neon grid and aura because it works on black */
+    background-image: 
+        linear-gradient(rgba(139, 92, 246, 0.7) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.7) 1px, transparent 1px);
+    background-color: rgba(139, 92, 246, 0.06); 
+}
+
+body.mouse-active #pro-reactive-bg::after {
+    opacity: 1;
+}
+/* ---------------------------------------- */
