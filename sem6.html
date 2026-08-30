@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Semester 6 - Coming Soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific Styles for Coming Soon Page */
+        .coming-soon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1rem;
+            text-align: center;
+            min-height: 50vh;
+        }
+
+        .animation-box {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pulsing Glow Rings */
+        .glow-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--primary-color);
+            opacity: 0.1;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        .glow-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .glow-ring:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.5); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* Floating Center Icon */
+        .center-icon {
+            position: relative;
+            z-index: 10;
+            width: 60px;
+            height: 60px;
+            color: var(--primary-color);
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 15px rgba(66, 133, 244, 0.4));
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .coming-soon-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .coming-soon-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 400px;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Sleek Loading Bar */
+        .loading-bar-container {
+            width: 100%;
+            max-width: 300px;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, var(--primary-color), #8b5cf6, var(--primary-color));
+            background-size: 200% 100%;
+            border-radius: 10px;
+            animation: slide 1.5s ease-in-out infinite, gradient-shift 2s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { left: -40%; }
+            100% { left: 100%; }
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+        
+        .stay-tuned {
+            margin-top: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="pro-reactive-bg"></div>
+    <script>
+        // Anti-Flash: Instantly apply dark mode before browser paints the page
+        if (localStorage.getItem('theme') === 'dark-mode') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+    
+    <div class="container">
+        <header>
+            
+        <div class="theme-switch-wrapper">
+            <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+            <h1>Semester VI (Work in Progress)</h1>
+            <p>Thadomal Shahani Engineering College (COMP) - Mumbai University</p>
+        </header>
+        
+        <nav class="nav-bar">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="sem1.html" class="nav-link">Semester 1</a>
+            <a href="sem2.html" class="nav-link">Semester 2</a>
+            <a href="sem3.html" class="nav-link">Semester 3</a>
+            <a href="sem4.html" class="nav-link">Semester 4</a>
+            <a href="index.html" class="nav-link">Semester 5</a>
+            <a href="sem6.html" class="nav-link active">Semester 6</a>
+        </nav>
+
+        <main class="coming-soon-container">
+            <div class="animation-box">
+                <div class="glow-ring"></div>
+                <div class="glow-ring"></div>
+                <div class="glow-ring"></div>
+                <svg class="center-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+            </div>
+            
+            <h2 class="coming-soon-title">Under Construction</h2>
+            <p class="coming-soon-desc">
+                The curriculum for Semester 6 is currently being processed. Once the subjects and marking schemes are finalized, this module will be unlocked.
+            </p>
+
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+            
+            <div class="stay-tuned">Coming Soon</div>
+        </main>
+    </div>
+
+    <!-- No sem6.js needed because it's just a static coming soon page -->
+    <script src="theme.js"></script>
+</body>
+</html>

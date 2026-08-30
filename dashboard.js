@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
         { key: "sem2", name: "Semester 2", link: "sem2.html" },
         { key: "sem3", name: "Semester 3", link: "sem3.html" },
         { key: "sem4", name: "Semester 4", link: "sem4.html" },
-        { key: "sem5", name: "Semester 5", link: "index.html" }
+        { key: "sem5", name: "Semester 5", link: "index.html" },
+        { key: "sem6", name: "Semester 6", link: "sem6.html", upcoming: true }
     ];
 
     let overallEarnedPoints = 0;
@@ -38,6 +39,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                     </button>
                 </td>
+            `;
+        } else if (sem.upcoming) {
+            tr.innerHTML = `
+                <td style="font-weight: 600; color: var(--text-main);"><a href="${sem.link}" style="color: inherit; text-decoration: none;">${sem.name}</a></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td><span class="status-badge status-upcoming" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.2);">Coming Soon</span></td>
+                <td></td>
             `;
         } else {
             tr.innerHTML = `
