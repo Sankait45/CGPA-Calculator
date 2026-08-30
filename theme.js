@@ -61,3 +61,19 @@ function initProReactive() {
 }
 initProReactive();
 // -----------------------------------
+
+// --- MOBILE TABLE LABEL INJECTOR ---
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('table').forEach(table => {
+        const headers = Array.from(table.querySelectorAll('th')).map(th => th.innerText.trim());
+        if (headers.length === 0) return;
+        table.querySelectorAll('tbody tr').forEach(tr => {
+            Array.from(tr.querySelectorAll('td')).forEach((td, i) => {
+                if (headers[i] && !td.hasAttribute('data-label')) {
+                    td.setAttribute('data-label', headers[i]);
+                }
+            });
+        });
+    });
+});
+// -----------------------------------
