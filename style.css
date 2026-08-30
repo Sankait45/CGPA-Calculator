@@ -1156,14 +1156,14 @@ body.mouse-active #pro-reactive-bg::after {
 
 /* --- ULTIMATE PREMIUM NATIVE-APP MOBILE EXPERIENCE --- */
 @media (max-width: 768px) {
-    /* 1. App Background & Safe Area */
+    /* 1. App Background & Layout */
     body { 
-        padding: 0 0 90px 0 !important; /* Huge padding at bottom for the fixed nav bar */
+        padding: 0 !important; 
         background: var(--bg-color) !important; 
     }
     
     .container {
-        padding: 0 1rem 2rem 1rem !important;
+        padding: 0 1rem 3rem 1rem !important;
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -1173,22 +1173,20 @@ body.mouse-active #pro-reactive-bg::after {
         background: transparent !important;
     }
 
-    /* 2. TRUE MOBILE BOTTOM NAVIGATION (App Style) */
+    /* 2. Top Navigation (Scrollable) */
     .nav-bar {
-        position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        top: auto !important;
+        position: sticky !important;
+        top: 0 !important;
+        bottom: auto !important; /* Remove bottom positioning */
         z-index: 9999 !important;
-        margin: 0 !important;
-        padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px)) 1rem !important;
+        margin: 0 -1rem 1.5rem -1rem !important;
+        padding: 1rem 1rem 1rem 1rem !important;
         background: rgba(255, 255, 255, 0.85) !important;
         backdrop-filter: blur(20px) saturate(200%) !important;
         -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
-        border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-        border-bottom: none !important;
-        border-radius: 24px 24px 0 0 !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-top: none !important;
+        border-radius: 0 !important; /* Flat top for sticky */
         
         display: flex !important;
         flex-wrap: nowrap !important;
@@ -1196,18 +1194,21 @@ body.mouse-active #pro-reactive-bg::after {
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
         gap: 0.5rem !important;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+        
+        /* Make sure there is padding on the right for the theme toggle */
+        padding-right: 4rem !important; 
     }
     .nav-bar::-webkit-scrollbar { display: none !important; }
     
     body.dark-mode .nav-bar {
         background: rgba(20, 20, 20, 0.85) !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
     }
 
     .nav-link {
-        padding: 0.8rem 1.25rem !important;
+        padding: 0.6rem 1.25rem !important;
         font-size: 0.95rem !important;
         border-radius: 100px !important;
         font-weight: 700 !important;
@@ -1222,43 +1223,57 @@ body.mouse-active #pro-reactive-bg::after {
         box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3) !important;
     }
 
+    /* Fix Theme Toggle Overlap */
+    /* Since it's inside nav-bar, we fix it to the top right of the screen */
+    .theme-toggle-btn {
+        position: fixed !important;
+        top: 0.8rem !important;
+        right: 1rem !important;
+        z-index: 10000 !important; /* Above nav bar */
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: var(--card-bg) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 50% !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+    }
+    body.dark-mode .theme-toggle-btn {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+    }
+
     /* 3. Modern App Header */
     header {
-        text-align: center !important;
-        padding: 2rem 0 1.5rem 0 !important;
+        text-align: left !important;
+        padding: 1rem 0 1.5rem 0 !important;
         position: relative;
     }
     header h1 { 
-        font-size: 1.8rem !important; 
+        font-size: 1.6rem !important; 
         font-weight: 900 !important; 
         letter-spacing: -0.5px !important;
         margin-bottom: 0.25rem !important;
     }
     header p { font-size: 1rem !important; }
-    
-    .theme-switch-wrapper {
-        position: absolute;
-        top: 1rem;
-        right: 0;
-        margin: 0 !important;
-    }
 
     /* 4. Dashboard Grid & Cards */
     .dashboard-grid { gap: 1.25rem !important; }
     .dash-card, tr {
         background: var(--card-bg) !important;
-        border: none !important; /* Remove borders for cleaner look */
-        border-radius: 24px !important; /* Extremely rounded like iOS */
+        border: none !important; 
+        border-radius: 20px !important; 
         padding: 1.5rem !important;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05) !important;
         margin-bottom: 1.5rem !important;
     }
     body.dark-mode .dash-card, body.dark-mode tr {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
         background: rgba(255,255,255,0.03) !important;
     }
 
-    /* 5. Restructure Tables completely */
+    /* 5. Restructure Tables */
     table, thead, tbody, th, td, tr { display: block; width: 100%; }
     thead { display: none; }
     
@@ -1283,7 +1298,6 @@ body.mouse-active #pro-reactive-bg::after {
     /* 6. Form Specific App Styling */
     #cgpa-form td:nth-child(1)[data-label]::before { display: none !important; }
     
-    /* Subject Title Section */
     #cgpa-form td:nth-child(1) {
         flex-direction: column;
         align-items: flex-start !important;
@@ -1291,20 +1305,19 @@ body.mouse-active #pro-reactive-bg::after {
         margin: -1.5rem -1.5rem 1rem -1.5rem;
         padding: 1.5rem 1.5rem 1rem 1.5rem !important;
         background: rgba(0,0,0,0.02);
-        border-radius: 24px 24px 0 0;
+        border-radius: 20px 20px 0 0;
     }
     body.dark-mode #cgpa-form td:nth-child(1) {
         border-bottom: 2px dashed rgba(255,255,255,0.05) !important;
         background: rgba(255,255,255,0.02);
     }
     .subject-name {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         font-weight: 800;
         color: var(--primary-color);
         margin-bottom: 0.25rem;
     }
 
-    /* Marks Entry Inputs */
     .marks-entry {
         display: flex;
         flex-direction: row !important;
@@ -1313,10 +1326,10 @@ body.mouse-active #pro-reactive-bg::after {
     }
     
     input[type="number"] {
-        font-size: 18px !important; /* Big text */
-        height: 50px !important; 
+        font-size: 18px !important; 
+        height: 48px !important; 
         border-radius: 14px !important;
-        width: 80px !important; 
+        width: 75px !important; 
         padding: 0 !important;
         background: rgba(0, 0, 0, 0.04) !important;
         border: 2px solid transparent !important;
@@ -1333,21 +1346,19 @@ body.mouse-active #pro-reactive-bg::after {
         transform: scale(1.05);
     }
 
-    /* Badges */
     .grade-badge { font-size: 1.1rem; padding: 0.4rem 1rem; border-radius: 12px; font-weight: 800; }
     
     /* 7. Action Buttons */
     .action-buttons-container {
         flex-direction: column !important;
         gap: 1rem !important;
-        margin-top: 2rem !important;
-        margin-bottom: 2rem !important; /* ensure space before bottom nav */
+        margin-top: 1rem !important;
     }
     .action-btn {
         width: 100% !important;
         justify-content: center !important;
-        height: 60px !important;
-        border-radius: 20px !important;
+        height: 56px !important;
+        border-radius: 18px !important;
         font-size: 1.15rem !important;
         font-weight: 800 !important;
     }
