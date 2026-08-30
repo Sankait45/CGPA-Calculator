@@ -63,6 +63,175 @@ document.addEventListener("DOMContentLoaded", () => {
         tbody.appendChild(tr);
     });
 
+    // ==========================================
+    // BACKUP & SYNC (IMPORT / EXPORT)
+    // ==========================================
+    const exportBtn = document.getElementById("export-btn");
+    const importTriggerBtn = document.getElementById("import-trigger-btn");
+    const importFileInput = document.getElementById("import-file");
+    const lastBackupText = document.getElementById("last-backup-text");
+    const importModal = document.getElementById("import-modal");
+    const importPreviewList = document.getElementById("import-preview-list");
+    const confirmImportBtn = document.getElementById("confirm-import-btn");
+    
+    let pendingImportData = null;
+
+    // Update Last Backup Text
+    function updateLastBackupText() {
+        const lastBackup = localStorage.getItem("cgpa_last_backup");
+        if (lastBackup && lastBackupText) {
+            lastBackupText.textContent = `Last backup: ${lastBackup}`;
+        } else if (lastBackupText) {
+            lastBackupText.textContent = "No backups made yet on this device.";
+        }
+    }
+    updateLastBackupText();
+
+    // Export Logic
+    if (exportBtn) {
+        exportBtn.addEventListener("click", () => {
+            const dataToExport = {
+                app: "CGPA_Calculator",
+                version: "1.0",
+                timestamp: Date.now(),
+                semesters: {}
+            };
+            
+            let hasData = false;
+            semesters.forEach(sem => {
+                const dataStr = localStorage.getItem(sem.key + "_data");
+                if (dataStr) {
+                    try {
+                        // Parse and re-stringify to ensure valid JSON and strip junk
+                        dataToExport.semesters[sem.key] = JSON.parse(dataStr);
+                        hasData = true;
+                    } catch (e) {
+                        console.error("Corrupted local data for " + sem.key);
+                    }
+                }
+            });
+
+            if (!hasData) {
+                showToast("No data to export!", "error");
+                return;
+            }
+
+            const dataStr = JSON.stringify(dataToExport, null, 2);
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement("a");
+            a.href = url;
+            const dateStr = new Date().toISOString().split('T')[0];
+            a.download = `CGPA-Calculator-Backup-${dateStr}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            const timeStr = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            const todayStr = `Today, ${timeStr}`;
+            localStorage.setItem("cgpa_last_backup", todayStr);
+            updateLastBackupText();
+            showToast("Backup exported successfully!", "success");
+        });
+    }
+
+    // Import Trigger
+    if (importTriggerBtn && importFileInput) {
+        importTriggerBtn.addEventListener("click", () => {
+            importFileInput.click();
+        });
+        
+        importFileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    // Safe parsing
+                    const parsedData = JSON.parse(event.target.result);
+                    
+                    // Validation
+                    if (!parsedData || parsedData.app !== "CGPA_Calculator" || !parsedData.semesters) {
+                        throw new Error("Invalid or incompatible backup file.");
+                    }
+                    
+                    pendingImportData = parsedData.semesters;
+                    
+                    // Build preview
+                    let previewHTML = "";
+                    let foundCount = 0;
+                    for (const [key, value] of Object.entries(pendingImportData)) {
+                        // Ensure key is a valid sem array key
+                        const semObj = semesters.find(s => s.key === key);
+                        if (semObj) {
+                            previewHTML += `<div style="margin-bottom: 4px;">✅ ${semObj.name}</div>`;
+                            foundCount++;
+                        }
+                    }
+                    
+                    if (foundCount === 0) {
+                        throw new Error("No valid semester data found in backup.");
+                    }
+                    
+                    importPreviewList.innerHTML = previewHTML;
+                    importModal.style.display = "flex";
+                    setTimeout(() => importModal.classList.add("active"), 10);
+                    
+                } catch (error) {
+                    showToast(error.message || "Failed to read backup file.", "error");
+                }
+                importFileInput.value = ""; // Reset input
+            };
+            reader.readAsText(file);
+        });
+    }
+    
+    window.closeImportModal = function() {
+        if (importModal) {
+            importModal.classList.remove('active');
+            setTimeout(() => { importModal.style.display = 'none'; }, 300);
+            pendingImportData = null;
+        }
+    };
+    
+    if (confirmImportBtn) {
+        confirmImportBtn.addEventListener("click", () => {
+            if (!pendingImportData) return;
+            
+            // 1. Create safety auto-backup of current data
+            const currentBackup = {};
+            semesters.forEach(sem => {
+                const data = localStorage.getItem(sem.key + "_data");
+                if (data) currentBackup[sem.key] = data;
+            });
+            if (Object.keys(currentBackup).length > 0) {
+                localStorage.setItem("cgpa_safety_backup", JSON.stringify(currentBackup));
+            }
+            
+            // 2. Overwrite data safely
+            try {
+                for (const [key, value] of Object.entries(pendingImportData)) {
+                    if (semesters.find(s => s.key === key)) {
+                        // Re-stringify parsed data to ensure it remains pure JSON without prototype injection
+                        localStorage.setItem(key + "_data", JSON.stringify(value));
+                    }
+                }
+                
+                closeImportModal();
+                showToast("Data imported successfully!", "success");
+                
+                // Reload dashboard
+                setTimeout(() => window.location.reload(), 1000);
+            } catch(e) {
+                showToast("Error importing data.", "error");
+            }
+        });
+    }
+
+
     // Update Top Level Cards
     if (overallCredits > 0) {
         const cgpa = overallEarnedPoints / overallCredits;
