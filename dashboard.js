@@ -33,6 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td style="color: var(--primary-color); font-weight: bold;">${data.sgpa.toFixed(2)}</td>
                 <td>${data.percentage.toFixed(2)}%</td>
                 <td><span class="status-badge status-complete">Completed</span></td>
+                <td class="text-center">
+                    <button class="delete-sem-btn" onclick="openDeleteModal('${sem.key}')" title="Delete ${sem.name}">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    </button>
+                </td>
             `;
         } else {
             tr.innerHTML = `
@@ -41,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>-</td>
                 <td>-</td>
                 <td><span class="status-badge status-missing">No Data</span></td>
+                <td></td>
             `;
         }
 
@@ -57,9 +63,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (overallMaxMarks > 0) {
         const perc = (overallObtainedMarks / overallMaxMarks) * 100;
-        document.getElementById("dash-perc").textContent = perc.toFixed(2) + "%";
+        document.getElementById("dash-perc").textContent = perc.toFixed(1) + "%";
+        
+        // Animate Ring
+        const circle = document.querySelector('.progress-ring__circle');
+        if (circle) {
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const offset = circumference - (perc / 100) * circumference;
+            
+            // Trigger reflow then animate
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 100);
+        }
     } else {
-        document.getElementById("dash-perc").textContent = "0.00%";
+        document.getElementById("dash-perc").textContent = "0.0%";
+        const circle = document.querySelector('.progress-ring__circle');
+        if(circle) circle.style.strokeDashoffset = 301.59; // reset ring
     }
 
     document.getElementById("dash-credits").textContent = overallCredits;
@@ -141,6 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const targetInput = document.getElementById("target-cgpa");
     const totalCreditsInput = document.getElementById("total-credits-input");
     const predResult = document.getElementById("predictor-result");
+    
+    // Empty State Toggle
+    if (overallCredits === 0) {
+        document.getElementById("dashboard-table-element").style.display = "none";
+        document.getElementById("empty-state-container").style.display = "block";
+    }
     
     // Visually disable Predictor if no data (Professional Toast Version)
     if (overallCredits === 0) {
@@ -251,4 +278,44 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+});
+// Custom Modal Delete Logic
+let semesterToDelete = null;
+
+window.openDeleteModal = function(semKey) {
+    semesterToDelete = semKey;
+    const modal = document.getElementById('delete-modal');
+    modal.style.display = 'flex';
+    // Small delay to allow display:flex to apply before opacity transition
+    setTimeout(() => modal.classList.add('active'), 10);
+};
+
+window.closeDeleteModal = function() {
+    const modal = document.getElementById('delete-modal');
+    modal.classList.remove('active');
+    setTimeout(() => { modal.style.display = 'none'; }, 300); // match transition duration
+    semesterToDelete = null;
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const confirmBtn = document.getElementById('confirm-delete-btn');
+    if(confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+            if(semesterToDelete) {
+                localStorage.removeItem(`${semesterToDelete}_data`);
+                sessionStorage.setItem('toastMessage', `Semester data deleted.`);
+                location.reload();
+            }
+        });
+    }
+});
+
+// Check if we need to show a toast from a page reload (after deletion)
+window.addEventListener('DOMContentLoaded', () => {
+    const msg = sessionStorage.getItem('toastMessage');
+    if(msg) {
+        // Wait a tiny bit for UI to settle
+        setTimeout(() => showToast(msg, 'success'), 300);
+        sessionStorage.removeItem('toastMessage');
+    }
 });

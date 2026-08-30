@@ -1,23 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    const toggleBtn = document.getElementById('theme-toggle-btn');
     const currentTheme = localStorage.getItem('theme');
 
     if (currentTheme) {
         document.body.classList.add(currentTheme);
-        if (currentTheme === 'dark-mode') {
-            toggleSwitch.checked = true;
-        }
     }
 
-    toggleSwitch.addEventListener('change', function(e) {
-        if (e.target.checked) {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light-mode');
-        }
-    });
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+            if (document.body.classList.contains('dark-mode')) {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            } else {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            }
+        });
+    }
 });
 
 // Force remove any cached View Transitions to prevent flashing ghosts

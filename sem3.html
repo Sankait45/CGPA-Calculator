@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TSEC Sem III Marks & SGPA Calculator</title>
-    <link rel="stylesheet" href="style.css?v=6.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=7.0">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a73e8">
 </head>
@@ -21,23 +24,22 @@
         <header>
             <h1>Semester III Marks & SGPA Calculator</h1>
             <p>Thadomal Shahani Engineering College (COMP) - Mumbai University</p>
-            <div class="theme-switch-wrapper">
-                <span class="theme-icon">☀️</span>
-                <label class="theme-switch" for="checkbox">
-                    <input type="checkbox" id="checkbox" />
-                    <div class="slider"></div>
-                </label>
-                <span class="theme-icon">🌙</span>
-            </div>
 
-            <nav class="nav-bar">
+            
+        
+        <nav class="nav-bar">
                 <a href="dashboard.html" class="nav-link">Dashboard</a>
                 <a href="sem1.html" class="nav-link">Semester 1</a>
                 <a href="sem2.html" class="nav-link">Semester 2</a>
                 <a href="sem3.html" class="nav-link active">Semester 3</a>
                 <a href="sem4.html" class="nav-link">Semester 4</a>
                 <a href="index.html" class="nav-link">Semester 5</a>
-            </nav>
+        
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </nav>
         </header>
         <main>
             <form id="cgpa-form">
