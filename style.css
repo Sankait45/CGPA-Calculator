@@ -142,7 +142,7 @@ input[type="number"]:focus { outline: none; border-color: var(--primary-color); 
 @media print {
     body { background: white !important; color: black !important; }
     .container { box-shadow: none !important; border: none !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
-    .no-print, .theme-switch-wrapper, .nav-bar { display: none !important; }
+    .no-print, .theme-switch-wrapper, .nav-bar, .theme-toggle-btn { display: none !important; }
     .dash-card { border: 1px solid #ccc !important; background: white !important; break-inside: avoid; }
     .semester-breakdown th { background: #eee !important; color: black !important; }
     .dash-value { color: black !important; }
