@@ -1363,3 +1363,39 @@ body.mouse-active #pro-reactive-bg::after {
         font-weight: 800 !important;
     }
 }
+
+
+/* --- THEME TOGGLE TOP-RIGHT CORNER FIX --- */
+header {
+    position: relative !important;
+}
+
+/* Ensure global toggle is placed correctly in header */
+.theme-toggle-btn {
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 1000 !important;
+    background: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: none !important;
+}
+
+/* In mobile, give it a background so it stands out if it overlaps anything */
+@media (max-width: 768px) {
+    .theme-toggle-btn {
+        top: 1.25rem !important;
+        right: 1.25rem !important;
+        background: var(--card-bg) !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+    }
+    body.dark-mode .theme-toggle-btn {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+    }
+    
+    /* Ensure the header has enough right-padding so long titles don't hit the toggle */
+    header h1 {
+        padding-right: 3rem !important;
+    }
+}
+/* ----------------------------------------- */
