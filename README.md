@@ -1,25 +1,81 @@
-# 🎓 Advanced CGPA & SGPA Calculator
+# 🎓 Master CGPA Calculator & Dashboard
 
-A modern, highly responsive, client-side CGPA calculator built specifically for engineering students. It features an interactive master dashboard, dynamic "What-If" grade targeting, and local storage data persistence.
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 
-### 🌟 Live Demo
-**[Click here to view the live application!](https://cgpa-calculator-gamma-wine.vercel.app/)**
+A modern, highly responsive, client-side CGPA calculator built specifically for engineering students. It goes beyond simple calculations by offering an interactive master dashboard, dynamic "What-If" grade targeting, and secure cross-device data syncing.
 
-## ✨ Key Features
-- **Dynamic Master Dashboard:** Automatically aggregates data across 5 semesters to calculate overall CGPA in real-time.
-- **"What-If" Exam Planner:** Intelligently calculates exactly how many marks you need in your remaining exams to pass or achieve an 'A' grade.
-- **Strict Data Validation:** Prevents out-of-bounds typos with live visual error highlighting.
-- **Premium Glassmorphism UI:** Features a modern, frosted-glass aesthetic with fluid Mesh Gradients and full Light/Dark mode support.
-- **Zero Backend Required:** Uses browser `localStorage` for blazing-fast, secure data persistence without requiring a database.
+🔗 **[Live Demo](https://cgpa-calculator-sankait45.vercel.app/)** *(Replace with your actual Vercel link)*
+
+---
+
+## ✨ Features
+
+- **📊 Master Dashboard:** Automatically aggregates data across all completed semesters to provide a bird's-eye view of your overall CGPA, total credits, and total percentage.
+- **🎯 "What-If" Target Predictor:** Input your dream CGPA and total degree credits. The app mathematically calculates exactly what SGPA you need in your remaining semesters to hit your goal.
+- **💾 Secure Backup & Sync (JSON):** Export your progress securely to a JSON file and import it on any other device. Includes a silent auto-backup safety layer, corrupted-file rejection, and XSS immunity.
+- **📱 Ultra-Responsive UI:** Custom-engineered CSS breakpoints ensure a flawless, app-like experience on screens as small as 320px (iPhone SE size).
+- **🖨️ Print-Ready Reports:** Hit `Ctrl + P` to generate clean, distraction-free PDF reports of your grades (navigation bars and buttons automatically hide).
+- **🌓 Dark/Light Mode:** Full theme toggling with system-preference detection.
+
+## 📸 Screenshots
+
+*(Replace these placeholders with actual screenshots of your app)*
+
+| Dashboard View | Semester Entry View | Mobile View (320px) |
+| :---: | :---: | :---: |
+| <img src="https://via.placeholder.com/400x250?text=Dashboard+Screenshot" width="400"/> | <img src="https://via.placeholder.com/400x250?text=Semester+Screenshot" width="400"/> | <img src="https://via.placeholder.com/200x350?text=Mobile+Screenshot" width="200"/> |
 
 ## 🛠️ Tech Stack
-- **Frontend:** Vanilla HTML5, CSS3, JavaScript (ES6+)
-- **Hosting/CI-CD:** Vercel
-- **Architecture:** Local Progressive Web App (PWA) compatible
 
-## 💡 How to Use
-1. Select a semester from the top navigation bar.
-2. Enter your marks for Internal Assessments (CIA) and End Semester Exams (SEE).
-3. The app will live-calculate your SGPA and provide target scores for empty fields.
-4. Click **Save to Master Dashboard** (only available when all inputs are valid).
-5. Navigate to the **Dashboard** to view your aggregated CGPA and performance graphs.
+This project was intentionally built using a **Zero-Dependency Vanilla Stack** to maximize performance, ensure instant load times, and demonstrate strong foundational web development skills.
+
+- **Frontend:** HTML5, Custom CSS3 (Flexbox/Grid/Variables), Vanilla JavaScript (ES6+)
+- **Storage:** Browser `localStorage` & File API (JSON parsing)
+- **Testing:** Node.js (Built-in `node:test` framework + JSDOM)
+
+## 🚀 How to Run Locally
+
+Because this project is built with Vanilla web technologies, you don't need any complex build steps to view the app!
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Sankait45/CGPA-Calculator.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd CGPA-Calculator
+   ```
+3. Open `dashboard.html` directly in your browser, or use an extension like VS Code Live Server.
+
+## 🧪 Automated Test Suite
+
+To ensure absolute mathematical accuracy for floating-point calculations and edge-case grade boundaries, this project includes a robust automated test suite. 
+
+The suite runs 26 independent tests covering SGPA/CGPA logic, impossible predictor targets, division by zero, and input validation.
+
+To run the tests:
+1. Ensure you have [Node.js](https://nodejs.org/) installed.
+2. Install the testing dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the test suite:
+   ```bash
+   npm test
+   ```
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Sankait45/CGPA-Calculator/issues).
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+*Designed & Developed by [Sankait45](https://github.com/Sankait45)*
