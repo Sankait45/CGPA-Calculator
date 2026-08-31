@@ -22,11 +22,11 @@ A modern, highly responsive, client-side CGPA calculator built specifically for 
 
 ## 📸 Screenshots
 
-*(Replace these placeholders with actual screenshots of your app)*
+
 
 | Dashboard View | Semester Entry View | Mobile View (320px) |
 | :---: | :---: | :---: |
-| <img src="https://via.placeholder.com/400x250?text=Dashboard+Screenshot" width="400"/> | <img src="https://via.placeholder.com/400x250?text=Semester+Screenshot" width="400"/> | <img src="https://via.placeholder.com/200x350?text=Mobile+Screenshot" width="200"/> |
+| <img src="assets/desktop-dashboard.png" width="400"/> | <img src="assets/desktop-semester.png" width="400"/> | <img src="assets/mobile-dashboard.png" width="200"/> |
 
 ## 🛠️ Tech Stack
 
