@@ -7,7 +7,7 @@
 
 A modern, highly responsive, client-side CGPA calculator built specifically for engineering students. It goes beyond simple calculations by offering an interactive master dashboard, dynamic "What-If" grade targeting, and secure cross-device data syncing.
 
-🔗 **[Live Demo](https://cgpa-calculator-sankait45.vercel.app/)** *(Replace with your actual Vercel link)*
+🔗 **[Live Demo](https://cgpa-calculator-sankait45.vercel.app/)**
 
 ---
 
